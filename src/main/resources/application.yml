@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: chat-app
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jws-algorithms: RS256
+          public-key-location: classpath:public-key.pem
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  openapi:
+    title: Identity API
+    version: 1
+    contact:
+      name: DuyKhanh
+      email: ninggiangboy@gmail.com
+      url: https://ngb.dev
+    summary: Identity App API Documentation with OpenAPI 3.0
+    description: This is a simple identity app API with OpenAPI 3.0
+    termsOfService: https://ngb.dev/terms
+token:
+  jwt:
+    secret-key: ${JWT_SECRET}
+    expiration-duration: 86400000
+  refresh-token-duration: 86400000
+  verification-token-duration: 86400000
+link:
+  verify-email: ${FRONT_END_URL}/identity/confirm-email/verify?token=
+  reset-password: ${FRONT_END_URL}/identity/reset-password/verify?token=
